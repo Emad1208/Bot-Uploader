@@ -4,19 +4,19 @@ from telegram import Update, InlineKeyboardButton, InlineKeyboardMarkup
 from telegram.ext import CommandHandler, MessageHandler, ApplicationBuilder, ContextTypes, CallbackQueryHandler, filters
 from telegram.ext.filters import TEXT
 from telegram.constants import ParseMode
-import asyncio  # اضافه کردن برای استفاده از sleep
+import asyncio  
 
 TOKEN = config('TOKEN')
-CHANNELS = {}  # تغییر به یک دیکشنری برای ذخیره {نام کانال: لینک کانال}
+CHANNELS = {}  
 TELEGRAM_API_URL = f"https://api.telegram.org/bot{TOKEN}"
-ADMIN_IDs = [5050906432, 8072841447, 1725178616]  # ایدی ادمین را وارد کنید
-ADMIN_ID = [5050906432]  # ایدی ادمین را وارد کنید
-# متغیر برای ذخیره پیام کانال
+ADMIN_IDs = [5050906432, 8072841447, 1725178616]   # ایدی ادمین را وارد کنید
+ADMIN_ID = [5050906432]  # ایدی ادمین برای ارسال پیام را وارد کنید
+
 CHANNEL_MESSAGE_ID = None  # آی‌دی پیام کانال
 
 # ذخیره پیام موقت برای ارسال
 ADMIN_MESSAGES = {}
-# users = set()  # لیست کاربران برای ارسال پیام
+
 # شناسه کانال منبع
 source_channel = -1002384637392  # کانال منبع که پیام‌ها از آن فوروارد می‌شوند
 user_states = {}
@@ -54,9 +54,6 @@ def save_user_id(user_id):
     if str(user_id) not in user_ids:
         with open(FILE_NAME, "a") as file:
             file.write(f"{user_id}\n")
-    #     print(f"User ID {user_id} saved.")
-    # else:
-    #     print(f"User ID {user_id} already exists.")
 
 # بررسی عضویت کاربر
 async def check_user_subscription(user_id):
@@ -371,12 +368,13 @@ async def handle_file(update: Update, context: ContextTypes.DEFAULT_TYPE):
 
         if file_id and file_type:
             # بررسی وجود فایل تکراری در دیتابیس
-            cursor.execute("SELECT * FROM files WHERE file_id = ?", (file_id,))
+            cursor.execute("SELECT file_identifier FROM files WHERE file_id = ?", (file_id,))
             existing_file = cursor.fetchone()
 
             if existing_file:
-                # اگر فایل قبلاً موجود بود
-                await update.message.reply_text("این فایل قبلاً ارسال شده است.")
+                existing_identifier = existing_file[0] 
+                link = f"https://t.me/{context.bot.username}?start={existing_identifier}"
+                await update.message.reply_text(f"⚠️ این فایل قبلاً ارسال شده است.\nلینک فایل قبلی:\n{link}")
             else:
                 # تولید شناسه یکتا برای فایل
                 file_identifier = generate_file_identifier()
