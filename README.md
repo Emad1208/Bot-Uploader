@@ -1,0 +1,1 @@
+A Telegram bot that takes files like videos, images, and so on. The bot saves the file's ID address in a database and gives you a link that contains the file you sent—without filling up your database space.
