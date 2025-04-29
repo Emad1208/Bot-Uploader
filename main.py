@@ -9,8 +9,8 @@ import asyncio
 TOKEN = config('TOKEN')
 CHANNELS = {}  
 TELEGRAM_API_URL = f"https://api.telegram.org/bot{TOKEN}"
-ADMIN_IDs = [5050906432, 8072841447, 1725178616]   # ایدی ادمین را وارد کنید
-ADMIN_ID = [5050906432]  # ایدی ادمین برای ارسال پیام را وارد کنید
+ADMIN_IDs = [0, 0, 0]   # ایدی ادمین را وارد کنید
+ADMIN_ID = [0]  # ایدی ادمین برای ارسال پیام را وارد کنید
 
 CHANNEL_MESSAGE_ID = None  # آی‌دی پیام کانال
 
@@ -103,7 +103,7 @@ async def start(update: Update, context: ContextTypes.DEFAULT_TYPE):
 async def handle_file_request(update: Update, context: ContextTypes.DEFAULT_TYPE, file_identifier: str):
     # ارسال پیام اولیه با دکمه اینلاین
     keyboard = [
-        [InlineKeyboardButton("مشاهده کانال", url="https://t.me/+oIqjq1ClWKM0Y2M0")]  # لینک کانال خود را وارد کنید
+        [InlineKeyboardButton("مشاهده کانال", url="https://t.me/chanel link")]  # لینک کانال خود را وارد کنید
     ]
     reply_markup = InlineKeyboardMarkup(keyboard)
     await update.message.reply_text(
@@ -125,19 +125,19 @@ async def handle_file_request(update: Update, context: ContextTypes.DEFAULT_TYPE
         if file_type == "photo":
             sent_message = await context.bot.send_photo(chat_id=update.effective_chat.id, photo=file_id, caption="""برای دانلود فیلم‌های بیشتر عضو چنل زیر شوید:
 
-🆔  @Pussi_bang                   🆔 @Pussi_bang""")
+🆔  @chanell link                   🆔 @chanel link""")
         elif file_type == "video":
             sent_message = await context.bot.send_video(chat_id=update.effective_chat.id, video=file_id, caption="""برای دانلود فیلم‌های بیشتر عضو چنل زیر شوید:
 
-🆔  @Pussi_bang                   🆔 @Pussi_bang""")
+🆔  @channel link                   🆔 @channel link""")
         elif file_type == "audio":
             sent_message = await context.bot.send_audio(chat_id=update.effective_chat.id, audio=file_id, caption="""برای دانلود فیلم‌های بیشتر عضو چنل زیر شوید:
 
-🆔  @Pussi_bang                   🆔 @Pussi_bang""")
+🆔  @channel link                   🆔 @channel link""")
         elif file_type == "document":
             sent_message = await context.bot.send_document(chat_id=update.effective_chat.id, document=file_id, caption="""برای دانلود فیلم‌های بیشتر عضو چنل زیر شوید:
 
-🆔  @Pussi_bang                   🆔 @Pussi_bang""")
+🆔  @channel link                   🆔 @channel link""")
         
         await context.bot.send_message(
                 chat_id= update._effective_user.id,
@@ -283,7 +283,7 @@ async def handle_message_id(update: Update, context: ContextTypes.DEFAULT_TYPE) 
 
         try:
             # کپی کردن پیام از کانال مشخص‌شده
-            from_chat_id = -1002218489604  # نام کاربری کانال خود را اینجا وارد کنید
+            from_chat_id = chnnel id  # نام کاربری کانال خود را اینجا وارد کنید
             original_message = await context.bot.forward_message(
                 chat_id=ADMIN_ID[0],  # پیام به یک ادمین فرستاده شود تا بتوانیم جزئیات آن را بررسی کنیم
                 from_chat_id=from_chat_id,
